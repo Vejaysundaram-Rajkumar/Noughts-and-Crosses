@@ -119,7 +119,70 @@ def howtoplay():
     win.mainloop()
 
 def playg():
-      pass
+       global sign
+    sign = 0
+
+    # Creates an empty board
+    global board
+    board = [[" " for x in range(3)] for y in range(3)]
+
+    # Check l(O/X) won the match or not
+    # according to the rules of the game
+    def winner(b, l):
+        return ((b[0][0] == l and b[0][1] == l and b[0][2] == l) or
+                (b[1][0] == l and b[1][1] == l and b[1][2] == l) or
+                (b[2][0] == l and b[2][1] == l and b[2][2] == l) or
+                (b[0][0] == l and b[1][0] == l and b[2][0] == l) or
+                (b[0][1] == l and b[1][1] == l and b[2][1] == l) or
+                (b[0][2] == l and b[1][2] == l and b[2][2] == l) or
+                (b[0][0] == l and b[1][1] == l and b[2][2] == l) or
+                (b[0][2] == l and b[1][1] == l and b[2][0] == l))
+
+    # Configure text on button while playing with another player
+    def get_text(i, j, gb, l1, l2):
+        global playername_s
+        global winx_s,wino_s,winx_m,wino_m,tie_s,tie_m
+        global sign
+        if board[i][j] == ' ':
+            if sign % 2 == 0:
+                l1.config(state=DISABLED)
+                l2.config(state=ACTIVE)
+                board[i][j] = "X"
+            else:
+                l2.config(state=DISABLED)
+                l1.config(state=ACTIVE)
+                board[i][j] = "O"
+            sign += 1
+            button[i][j].config(state=DISABLED)
+            if(board[i][j]=="X"):
+                button[i][j].config(text=board[i][j],bg="white")
+            elif(board[i][j]=="O"):
+                button[i][j].config(text=board[i][j],bg="black")
+            
+        if winner(board, "X"):
+            gb.destroy()    
+            box = messagebox.showinfo("WINNER", database.player_m1)
+            
+            winx_m+=1
+        elif winner(board, "O"):
+            gb.destroy()
+            box = messagebox.showinfo("WINNER",database.player_m2)
+            wino_m+=1
+        elif(isfull()):
+            gb.destroy()
+            box = messagebox.showinfo("TIE GAME", "TIE GAME")
+            tie_m+=1
+    # Check if the player can push the button or not
+    def isfree(i, j):
+        return board[i][j] == " "
+
+    # Check the board is full or not
+    def isfull():
+        flag = True
+        for i in board:
+            if(i.count(' ') > 0):
+                flag = False
+        return flag
 def result():
       pass
 def changename():
