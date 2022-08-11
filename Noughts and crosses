@@ -184,9 +184,96 @@ def playg():
                 flag = False
         return flag
 def result():
-      pass
+      data=Toplevel(root)
+    data.grab_set()
+    data.title("HISTORY")
+    img1= ImageTk.PhotoImage(Image.open("D:\\College\\College 1st year\\mini project (python-sem 2)\\bg2.PNG"))
+    label= Label(data,image= img1)
+    label.place(x=0,y=0)
+    win1=Label(data,text="SINGLE PLAYER   NO OF WINS:",fg="black",font="Times 20 italic bold").place(x=20,y=10)
+    win2=Label(data,text=database.player_s,fg="blue",font="Times 19 italic bold").place(x=20,y=70)
+    win3=Label(data,text="COMPUTER:",fg="blue",font="Times 19 italic bold").place(x=20,y=110)
+    win4=Label(data,text="TIE GAME:",fg="blue",font="Times 19 italic bold").place(x=20,y=160)
+    win5=Label(data,text="MULTI PLAYER    No OF WINS:",fg="black",font="Times 20 italic bold").place(x=20,y=250)
+    win6=Label(data,text=database.player_m1,fg="blue",font="Times 19 italic bold").place(x=20,y=320)
+    win7=Label(data,text=database.player_m2,fg="blue",font="Times 19 italic bold").place(x=20,y=370)
+    win8=Label(data,text="TIE GAME:",fg="blue",font="Times 19 italic bold").place(x=20,y=415)
+
+    def cleard():
+        global winx_s,wino_s,winx_m,wino_m,tie_s,tie_m
+        wino_m=tie_m=tie_s=wino_s=winx_m=winx_s=0
+        data.destroy()
+        result()
+    def exitrec():
+        data.destroy()
+    wins_for_x_s=Label(data,text=winx_s,fg="blue",font="Times 19 italic bold").place(x=450,y=70)
+    wins_for_o_s=Label(data,text=wino_s,fg="blue",font="Times 19 italic bold").place(x=450,y=110)
+    ties=Label(data,text=tie_s,fg="blue",font="Times 19 italic bold").place(x=450,y=150)
+    wins_for_x_m=Label(data,text=winx_m,fg="blue",font="Times 19 italic bold").place(x=450,y=320)
+    wins_for_o_m=Label(data,text=wino_m,fg="blue",font="Times 19 italic bold").place(x=450,y=370)
+    tiem=Label(data,text=tie_m,fg="blue",font="Times 19 italic bold").place(x=450,y=410)
+    
+
+    clear=Button(data,text="Clear Record",command=cleard,font="Times 25 italic bold").place(x=50,y=500)
+    exitr=Button(data,text="Exit Record",command=exitrec,font="Times 25 italic bold").place(x=350,y=500)
+
+
+
+
+    data.geometry("600x600")
+    data.mainloop()
 def changename():
-      pass
+      global playername_s
+    namew=Toplevel(root)
+    namew.grab_set()
+    namew.title("Name Change")
+    img1= ImageTk.PhotoImage(Image.open("D:\\College\\College 1st year\\mini project (python-sem 2)\\bg.PNG"))
+    label= Label(namew,image= img1)
+    label.place(x=0,y=0)
+    win1=Label(namew,text="SINGLE PLAYER ",fg="black",font="Times 20 italic bold").place(x=50,y=50)
+    win1=Label(namew,text="MULTI PLAYER \n\nPLAYER 1:\n\nPLAYER 2:",fg="black",font="Times 20 italic bold").place(x=50,y=190)
+    
+    def get_name():
+        playername_s=entry.get()
+        playername_m1=entry2.get()
+        playername_m2=entry3.get()
+        if((playername_s!="") or (playername_m1!="" and playername_m2!="")):
+            upbox=messagebox.showinfo("UPDATE#@","NAME UPDATED SUCCESFULLY")
+            if(playername_m1!="" and playername_m2!=""):
+                database.player_m1=playername_m1
+                database.player_m2=playername_m2
+                namew.destroy()
+            elif(playername_s!=""):
+                database.player_s=playername_s
+                namew.destroy()
+        else:
+            nobox=messagebox.showerror("ERROR!!!","EMPTY CELL")
+
+    def cname():
+        namew.destroy()
+    def cancelf():
+        box=messagebox.askquestion("ARE U SURE","ARE YOU SURE U WANT TO MAKE IT TO DEFAULT ?")
+        if box=="yes":
+            database.player_s="PLAYER"
+            database.player_m1="PLAYER 1"
+            database.player_m2="PLAYER 2"
+            namew.destroy()
+        else:
+            pass
+    entry = Entry(namew, width= 25,font="Times 15 bold",fg="red")
+    entry.place(x=300,y=55)
+    entry2 = Entry(namew, width= 25,font="Times 15 bold")
+    entry2.place(x=300,y=260)
+    entry3 = Entry(namew, width= 25,font="Times 15 bold")
+    entry3.place(x=300,y=330)    
+    updateb=Button(namew,text="UPDATE",command=get_name,font="Times 20 italic bold").place(x=50,y=500)
+    exitr=Button(namew,text="EXIT",command=cname,font="Times 20 italic bold").place(x=450,y=500)
+    cancel=Button(namew,text="Default",command=cancelf,font="Times 20 italic bold").place(x=300,y=500)
+
+
+
+    namew.geometry("600x600")
+    namew.mainloop()
      
 
 
@@ -198,8 +285,6 @@ def mainscreen():
     playgame=Button(root,width=20,height=2,text="PLAY GAME",fg="purple",bg="lightgreen",font="Times 25 italic bold",highlightthickness=3,highlightbackground="black",command=playg).place(y=400,x=490)
     results=Button(root,width=20,height=2,text="RESULTS",fg="purple",bg="yellow",font="Times 25 italic bold",highlightthickness=3,highlightbackground="black",command=result).place(y=600,x=490)
     name_change=Button(root,width=20,height=2,text="RENAME",fg="red",bg="white",font="Times 15 italic bold",highlightthickness=3,highlightbackground="black",command=changename).place(y=10,x=1300)
-
-
 
 
 
